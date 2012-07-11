@@ -8,11 +8,14 @@
     ********************************************/
     
     require_once './sdk-1.5.8.2/sdk.class.php';
+
+    $key = "ADD_YOUR_KEY_HERE";
+    $secret = "ADD_YOUR_SECRET_HERE";
     
     CFCredentials::set(array(
         'credentials' => array(
-            'key' => 'key',
-            'secret' => 'secret',
+            'key' => $key,
+            'secret' => $secret,
             'default_cache_config' => '',
             'certificate_authority' => false
         ),
@@ -113,28 +116,35 @@
         echo "================================================================================\n";
         echo "Security Group: " . $group['groupName'] . "\n";
         echo "--------------------------------------------------------------------------------\n";
-        echo "[*] Group ID:          " . $group['groupId'] . "\n";
-        echo "[*] Group Description: " . $group['groupDescription'] . "\n";
+        echo "[+] Group ID:          " . $group['groupId'] . "\n";
+        echo "[+] Group Description: " . $group['groupDescription'] . "\n";
+        echo "--------------------------------------------------------------------------------\n";
+        echo "  Rules that are defined for " . $group['groupName'] . "\n";
         echo "--------------------------------------------------------------------------------\n";
         foreach ($group['rules'] as $rule) {
-            echo "[*] Rule:              " . $rule . "\n";
+            echo "    [+] Rule:          " . $rule . "\n";
         }
         echo "--------------------------------------------------------------------------------\n";
-        echo "Instances that use this security group:\n";
+        echo "  Instances that use this security group:\n";
         foreach ($instances as $instance) {
             if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
                 echo "--------------------------------------------------------------------------------\n";
-                echo "    Instance ID:            " . $instance['instanceId'] . "\n";
-                echo "    [*] Public IP Address:  " . $instance['publicIp'] . "\n";
-                echo "    [*] Public DNS Name:    " . $instance['dns'] . "\n";
-                echo "    [*] Private IP Address: " . $instance['privateIp'] . "\n";
-                echo "    [*] Private DNS Name:   " . $instance['privateDns'] . "\n";
-                echo "    [*] Architecture:       " . $instance['architecture'] . "\n";
-                echo "    [*] AMI:                " . $instance['ami'] . "\n";
-                echo "    [*] SSH Key:            " . $instance['sshKey'];
-                foreach ($keys as $key) {
-                    if ((string)$key['keyName'] == (string)$instance['sshKey']){ echo " (" . $key['keyFingerprint'] . ")\n"; }
-                }
+                echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
+                echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
+                echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
+                echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
+                echo "        [-] AMI:                " . $instance['ami'] . "\n";
+                echo "        [-] SSH Key:            " . $instance['sshKey'];
+                // If you want to output the key fingerprint along with the name of the SSH key,
+                // comment out the next line and uncomment the foreach loop
+                echo "\n";
+                //foreach ($keys as $key) {
+                //	if ((string)$key['keyName'] == $instance['sshKey']){ 
+                //        echo " (" . $key['keyFingerprint'] . ")\n"; 
+                //    }
+                //}
             }
         }
         echo "================================================================================\n\n";
