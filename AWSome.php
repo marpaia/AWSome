@@ -1,7 +1,7 @@
 <?php
 
     /*******************************************
-    * AWSenum.php
+    * AWSome.php
     * 
     * Mike Arpaia
     * mike@arpaia.co
