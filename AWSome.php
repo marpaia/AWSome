@@ -5,13 +5,25 @@
     * 
     * Mike Arpaia
     * mike@arpaia.co
+    *
+    * The only thing you have to do to make this
+    * work is set your IAM credentials below and
+    * make sure that the path to sdk.class.php 
+    * is correct.
+    *
+    * Usage: php AWSome.php
     ********************************************/
     
-    require_once './sdk-1.5.8.2/sdk.class.php';
-
+    // use your IAM credentials here
     $key = "ADD_YOUR_KEY_HERE";
     $secret = "ADD_YOUR_SECRET_HERE";
     
+    // include the sdk.class.php file
+    // you can find it in the root 
+    // of the AWS PHP SDK
+    require_once './sdk-1.5.8.2/sdk.class.php';
+    
+    // set the credentials
     CFCredentials::set(array(
         'credentials' => array(
             'key' => $key,
@@ -22,12 +34,14 @@
         '@default' => 'credentials'
     ));
     
+    // instantiate the AmazonEC2 object
     $ec2 = new AmazonEC2();
     
     /******************************************
     * Getting information about security groups
     *******************************************/
     // gather information about security groups
+    // and store it in $securityGroups
     $sg = $ec2->describe_security_groups();
     $securityGroups = array();
     foreach ($sg->body->securityGroupInfo->item as $attr) {
@@ -64,6 +78,7 @@
     * Getting information about instances
     *************************************/
     // gather information about instances
+    // and store it in $instances
     $ins = $ec2->describe_instances();
     $instances = array();
     // enumerate instances
@@ -89,13 +104,13 @@
         // once the instance information has been gathered,
         // add it as a nested array to the instances array
         array_push($instances, $instance);
-
     }
     
     /*******************************
     * Getting information about keys
     ********************************/
     // gather information about key pairs
+    // and store it in $keys
     $k = $ec2->describeKeyPairs();
     $keys = array();
     // enumerate keys
@@ -111,43 +126,55 @@
         array_push($keys, $key);
     }
     
-    // build the output
-    foreach ($securityGroups as $group) {
-        echo "================================================================================\n";
-        echo "Security Group: " . $group['groupName'] . "\n";
-        echo "--------------------------------------------------------------------------------\n";
-        echo "[+] Group ID:          " . $group['groupId'] . "\n";
-        echo "[+] Group Description: " . $group['groupDescription'] . "\n";
-        echo "--------------------------------------------------------------------------------\n";
-        echo "  Rules that are defined for " . $group['groupName'] . "\n";
-        echo "--------------------------------------------------------------------------------\n";
-        foreach ($group['rules'] as $rule) {
-            echo "    [+] Rule:          " . $rule . "\n";
-        }
-        echo "--------------------------------------------------------------------------------\n";
-        echo "  Instances that use this security group:\n";
-        foreach ($instances as $instance) {
-            if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
-                echo "--------------------------------------------------------------------------------\n";
-                echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
-                echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
-                echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
-                echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
-                echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
-                echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
-                echo "        [-] AMI:                " . $instance['ami'] . "\n";
-                echo "        [-] SSH Key:            " . $instance['sshKey'];
-                // If you want to output the key fingerprint along with the name of the SSH key,
-                // comment out the next line and uncomment the foreach loop
-                echo "\n";
-                //foreach ($keys as $key) {
-                //	if ((string)$key['keyName'] == $instance['sshKey']){ 
-                //        echo " (" . $key['keyFingerprint'] . ")\n"; 
-                //    }
-                //}
+    function stdOutput($securityGroups, $instances, $keys){
+        // this function builds the output that is echo'd to stdout
+        //
+        // if you want the code to output differently, just
+        // add a function and call it at the end of the script
+        foreach ($securityGroups as $group) {
+            echo "================================================================================\n";
+            echo "Security Group: " . $group['groupName'] . "\n";
+            echo "--------------------------------------------------------------------------------\n";
+            echo "[+] Group ID:          " . $group['groupId'] . "\n";
+            echo "[+] Group Description: " . $group['groupDescription'] . "\n";
+            echo "--------------------------------------------------------------------------------\n";
+            echo "  Rules that are defined for " . $group['groupName'] . "\n";
+            echo "--------------------------------------------------------------------------------\n";
+            foreach ($group['rules'] as $rule) {
+                echo "    [+] Rule:          " . $rule . "\n";
             }
+            echo "--------------------------------------------------------------------------------\n";
+            echo "  Instances that use this security group:\n";
+            foreach ($instances as $instance) {
+                if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
+                    echo "--------------------------------------------------------------------------------\n";
+                    echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
+                    echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
+                    echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                    echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                    echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
+                    echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
+                    echo "        [-] AMI:                " . $instance['ami'] . "\n";
+                    echo "        [-] SSH Key:            " . $instance['sshKey'];
+                    // If you want to output the key fingerprint along with the name of the SSH key,
+                    // comment out the next line and uncomment the foreach loop
+                    echo "\n";
+                    //foreach ($keys as $key) {
+                    //	if ((string)$key['keyName'] == $instance['sshKey']){ 
+                    //        echo " (" . $key['keyFingerprint'] . ")\n"; 
+                    //    }
+                    //}
+                }
+            }
+            echo "================================================================================\n\n";
         }
-        echo "================================================================================\n\n";
     }
+    
+    // this takes the arrays that have been generated and passes them 
+    // to the function that displays the plain text output to stdout
+    //
+    // if you want the code to output differently, just
+    // add a function and call it here
+    stdOutput($securityGroups, $instances, $keys);
 
 ?>
