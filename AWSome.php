@@ -145,14 +145,21 @@
             }
             echo "--------------------------------------------------------------------------------\n";
             echo "  Instances that use this security group:\n";
+            echo "--------------------------------------------------------------------------------\n";
+            $i = false;
+            $ips = array();
             foreach ($instances as $instance) {
                 if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
-                    echo "--------------------------------------------------------------------------------\n";
+                    $i = true;
                     echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
-                    echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
-                    echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
-                    echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
-                    echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
+                    if ($instance['publicIp'] != '') { 
+                        echo "        [-] Instance Status:    Instance is up.\n";
+                        echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
+                        array_push($ips, $instance['publicIp']);
+                        echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                        echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                        echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
+                    } else{ echo "        [!] Instance Status:    Instance is stopped.\n"; }
                     echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
                     echo "        [-] AMI:                " . $instance['ami'] . "\n";
                     echo "        [-] SSH Key:            " . $instance['sshKey'];
@@ -165,6 +172,13 @@
                     //    }
                     //}
                 }
+            }
+            if (!$i) { echo "    [!] There are no instances in this security group.\n"; }
+            if ($i) { 
+                echo "--------------------------------------------------------------------------------\n";
+                echo "  IP addresses of instances in this security group\n";
+                echo "--------------------------------------------------------------------------------\n";
+                foreach ($ips as $ip) { echo "$ip\n"; }
             }
             echo "================================================================================\n\n";
         }
