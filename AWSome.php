@@ -86,9 +86,11 @@
     // is passed to the --config or -c option
     // and returns the relevant information
     function readConfig($config){
+        //try opening the file
         try { $c = fopen("$config", 'r'); }
         catch (Exception $e){ die("Couln't open supplied config file.\n"); }
         
+        // get the relevant data out of the file
         $k = trim((string)fgets($c), "\n");
         $s = trim((string)fgets($c), "\n");
         $sdkClassPhp = trim((string)fgets($c), "\n");
@@ -151,7 +153,7 @@
     // and store it in $securityGroups
     $sg = $ec2->describe_security_groups();
     $securityGroups = array();
-    if ($sg->status == 401) { die("Something went wrong. Check your credentials.\n"); }
+    if ($sg->status == 401) { die("Received a HTTP 401 error. Check your credentials.\n"); }
     foreach ($sg->body->securityGroupInfo->item as $attr) {
         // instantiate a temp array
         $array = array();
@@ -165,7 +167,7 @@
         // enumerate rules
         foreach ($attr->ipPermissions->item as $attr) {
             // build each rule as a string
-            $rule = "$attr->ipProtocol port $attr->fromPort - $attr->toPort from ";
+            $rule = "$attr->ipProtocol port $attr->fromPort-$attr->toPort from ";
             $arr = (array($attr->ipRanges->item->cidrIp));
             $groupName = array($attr->groups->item->groupName);
             if (!is_null($arr[0]) and !is_null($groupName[0])) { $rule .= "$arr[0] and $groupName[0]"; }
@@ -254,7 +256,6 @@
                 echo "[+] Group ID:          " . $group['groupId'] . "\n";
                 echo "[+] Group Description: " . $group['groupDescription'] . "\n";
                 echo "--------------------------------------------------------------------------------\n";
-                
                 echo "  Rules that are defined for " . $group['groupName'] . "\n";
                 echo "--------------------------------------------------------------------------------\n";
                 foreach ($group['rules'] as $rule) {
@@ -284,14 +285,14 @@
                                 echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
                                 echo "        [-] AMI:                " . $instance['ami'] . "\n";
                                 echo "        [-] SSH Key:            " . $instance['sshKey'];
-                            // If you want to output the key fingerprint along with the name of the SSH key,
-                            // comment out the next line and uncomment the foreach loop
-                            echo "\n";
-                            //foreach ($keys as $key) {
-                            //	if ((string)$key['keyName'] == $instance['sshKey']){ 
-                            //        echo " (" . $key['keyFingerprint'] . ")\n"; 
-                            //    }
-                            //}
+                                // If you want to output the key fingerprint along with the name of the SSH key,
+                                // comment out the next line and uncomment the foreach loop
+                                echo "\n";
+                                //foreach ($keys as $key) {
+                                //	if ((string)$key['keyName'] == $instance['sshKey']){ 
+                                //        echo " (" . $key['keyFingerprint'] . ")\n"; 
+                                //    }
+                                //}
                             }
                         }
                     }
