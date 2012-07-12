@@ -35,6 +35,15 @@
 		echo "=                                                       =\n";
 		echo "=========================================================\n";
 		echo "=                                                       =\n";
+		echo "= To use AWSome, you need the following:                =\n";
+		echo "=     * AWS PHP SDK                                     =\n";
+		echo "=       You can download the AWS PHP SDK from           =\n";
+		echo "=       http://aws.amazon.com/sdkforphp/                =\n";
+		echo "=                                                       =\n";
+		echo "=     * Appropriate IAM Credentials                     =\n";
+		echo "=                                                       =\n";
+		echo "=========================================================\n";
+		echo "=                                                       =\n";
 		echo "= Options:                                              =\n";
 		echo "=     php AWSome.php -v or --verbose                    =\n";
 		echo "=     -v gives you more information about each instance =\n";
@@ -84,7 +93,13 @@
     // include the sdk.class.php file
     // you can find it in the root 
     // of the AWS PHP SDK
-    require_once './sdk-1.5.8.2/sdk.class.php';
+    try { 
+		require_once './sdk-1.5.8.2/sdk.class.php'; 
+	}
+	catch (Exception $e) { 
+		echo "AWSome can't find the SDK\n";
+		die();
+	}
     
     // set the credentials
     CFCredentials::set(array(
