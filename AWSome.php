@@ -11,9 +11,46 @@
     * make sure that the path to sdk.class.php 
     * is correct.
     *
-    * Usage: php AWSome.php
+    * Options:
+    *   php AWSome.php -v or --verbose
+    *       -v gives you more information about
+    *       each instance
+    *   php AWSome.php --ip or -i
+    *       -ip returns a <CR> deliminated list
+    *       of each IP associated with a security
+    *       group. this is useful for feeding IPs
+    *       to additional security tools
     ********************************************/
+    function help(){
+        echo "     ___   ____    __    ____   _______.  ______   .___  ___.  _______ \n";
+        echo "    /   \  \   \  /  \  /   /  /       | /  __  \  |   \/   | |   ____|\n";
+        echo "   /  ^  \  \   \/    \/   /  |   (----`|  |  |  | |  \  /  | |  |__   \n";
+        echo "  /  /_\  \  \            /    \   \    |  |  |  | |  |\/|  | |   __|  \n";
+        echo " /  _____  \  \    /\    / .----)   |   |  `--'  | |  |  |  | |  |____ \n";
+        echo "/__/     \__\  \__/  \__/  |_______/     \______/  |__|  |__| |_______|\n";
+        die();
+    }
     
+    // argument parsing
+    $shortopts = "vhi";
+    $longopts = array(
+        "verbose" , 
+        "help" ,
+        "ip"
+    );
+    $opts = getopt($shortopts, $longopts);
+    $verbose = false;
+    $ipDisplay = false;
+    foreach ($opts as $key => $value) {
+        if ($key == "v" or $key == "verbose") { $verbose = true; }
+        if ($key == "i" or $key == "ip") { $ipDisplay = true; }
+        if ($key == "h" or $key == "help") { help(); }
+    }
+    $options = array(
+        $verbose ,
+        $ipDisplay
+    );
+        
     // use your IAM credentials here
     $key = "ADD_YOUR_KEY_HERE";
     $secret = "ADD_YOUR_SECRET_HERE";
@@ -125,8 +162,10 @@
         // add it as a nested array to the kets array
         array_push($keys, $key);
     }
-    
-    function stdOutput($securityGroups, $instances, $keys){
+
+    function stdOutput($securityGroups, $instances, $keys, $options){
+        $verbose = $options[0];
+        $ipDisplay = $options[1];
         // this function builds the output that is echo'd to stdout
         //
         // if you want the code to output differently, just
@@ -156,13 +195,16 @@
                         echo "        [-] Instance Status:    Instance is up.\n";
                         echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
                         array_push($ips, $instance['publicIp']);
-                        echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
-                        echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
-                        echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n";
+                        if ($verbose){ 
+                            echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                            echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                            echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
+                        }
                     } else{ echo "        [!] Instance Status:    Instance is stopped.\n"; }
-                    echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
-                    echo "        [-] AMI:                " . $instance['ami'] . "\n";
-                    echo "        [-] SSH Key:            " . $instance['sshKey'];
+                    if ($verbose){ 
+                        echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
+                        echo "        [-] AMI:                " . $instance['ami'] . "\n";
+                        echo "        [-] SSH Key:            " . $instance['sshKey'];
                     // If you want to output the key fingerprint along with the name of the SSH key,
                     // comment out the next line and uncomment the foreach loop
                     echo "\n";
@@ -171,10 +213,11 @@
                     //        echo " (" . $key['keyFingerprint'] . ")\n"; 
                     //    }
                     //}
+                    }
                 }
             }
             if (!$i) { echo "    [!] There are no instances in this security group.\n"; }
-            if ($i) { 
+            if ($i and $ipDisplay) { 
                 echo "--------------------------------------------------------------------------------\n";
                 echo "  IP addresses of instances in this security group\n";
                 echo "--------------------------------------------------------------------------------\n";
@@ -189,6 +232,6 @@
     //
     // if you want the code to output differently, just
     // add a function and call it here
-    stdOutput($securityGroups, $instances, $keys);
+    stdOutput($securityGroups, $instances, $keys, $options);
 
 ?>
