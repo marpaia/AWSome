@@ -5,102 +5,128 @@
     * 
     * Mike Arpaia
     * mike@arpaia.co
-    *
-    * The only thing you have to do to make this
-    * work is set your IAM credentials below and
-    * make sure that the path to sdk.class.php 
-    * is correct.
-    *
-    * Options:
-    *   php AWSome.php -v or --verbose
-    *       -v gives you more information about
-    *       each instance
-    *   php AWSome.php --ip or -i
-    *       -ip returns a <CR> deliminated list
-    *       of each IP associated with a security
-    *       group. this is useful for feeding IPs
-    *       to additional security tools
     ********************************************/
+    
+    // include the paht to the sdk.class.php file
+    // you can find it in the root of the AWS PHP SDK
+    $sdkClassPhp = "./sdk/sdk.class.php";
+    
+    // set your IAM credentials here
+    $key = "key";
+    $secret = "secret";
+    
+    
+    
     function help(){
-		echo "=========================================================\n";
-		echo "=                                                       =\n";
-		echo "=    Oo    o          `O .oOOOo.                        =\n";
-		echo "=   o  O   O           o o     o                        =\n";
-		echo "=  O    o  o           O O.                             =\n";
-		echo "= oOooOoOo O           O  `OOoo.                        =\n";
-		echo "= o      O o     o     o       `O .oOo. `oOOoOO. .oOo.  =\n";
-		echo "= O      o O     O     O        o O   o  O  o  o OooO'  =\n";
-		echo "= o      O `o   O o   O' O.    .O o   O  o  O  O O      =\n";
-		echo "= O.     O  `OoO' `OoO'   `oooO'  `OoO'  O  o  o `OoO'  =\n";
-		echo "=                                                       =\n";
-		echo "=========================================================\n";
-		echo "=                                                       =\n";
-		echo "= To use AWSome, you need the following:                =\n";
-		echo "=     * AWS PHP SDK                                     =\n";
-		echo "=       You can download the AWS PHP SDK from           =\n";
-		echo "=       http://aws.amazon.com/sdkforphp/                =\n";
-		echo "=                                                       =\n";
-		echo "=     * Appropriate IAM Credentials                     =\n";
-		echo "=                                                       =\n";
-		echo "=========================================================\n";
-		echo "=                                                       =\n";
-		echo "= Options:                                              =\n";
-		echo "=     php AWSome.php -v or --verbose                    =\n";
-		echo "=     -v gives you more information about each instance =\n";
-		echo "=                                                       =\n";
-		echo "=     php AWSome.php --ip or -i                         =\n";
-		echo "=      -ip returns a <CR> deliminated list of each IP   =\n";
-		echo "=      associated with a security group. this is useful =\n";
-		echo "=      for feeding IPs to additional security tools     =\n";
-		echo "=                                                       =\n";
-		echo "=     php AWSome.php --help or -h                       =\n";
-		echo "=      -h shows you the help that you're reading now    =\n";
-		echo "=                                                       =\n";
-		echo "=========================================================\n";
-		echo "=                                                       =\n";
-		echo "= Contact:                                              =\n";
-		echo "=     Mike Arpaia                                       =\n";
-		echo "=     mike@arpaia.co                                    =\n";
-		echo "=                                                       =\n";
-		echo "=========================================================\n";
+        echo "===============================================================================\n";
+        echo "=                                                                             =\n";
+        echo "=               Oo    o          `O .oOOOo.                                   =\n";
+        echo "=              o  O   O           o o     o                                   =\n";
+        echo "=             O    o  o           O O.                                        =\n";
+        echo "=            oOooOoOo O           O  `OOoo.                                   =\n";
+        echo "=            o      O o     o     o       `O .oOo. `oOOoOO. .oOo.             =\n";
+        echo "=            O      o O     O     O        o O   o  O  o  o OooO'             =\n";
+        echo "=            o      O `o   O o   O' O.    .O o   O  o  O  O O                 =\n";
+        echo "=            O.     O  `OoO' `OoO'   `oooO'  `OoO'  O  o  o `OoO'             =\n";
+        echo "=                                                                             =\n";
+        echo "===============================================================================\n";
+        echo "=                                                                             =\n";
+        echo "= To use AWSome, you need the following:                                      =\n";
+        echo "=     * AWS PHP SDK                                                           =\n";
+        echo "=       You can download the AWS PHP SDK from                                 =\n";
+        echo "=       http://aws.amazon.com/sdkforphp/                                      =\n";
+        echo "=                                                                             =\n";
+        echo "=     * Appropriate IAM Credentials                                           =\n";
+        echo "=                                                                             =\n";
+        echo "= If you're going to use AWSome more than a few times, you should hard code   =\n";
+        echo "= the path to the SDK file and your AWS IAM credentials into AWSome           =\n";
+        echo "=                                                                             =\n";
+        echo "= You can find that the variables \$sdkClassPhp, \$key, and \$secret all get     =\n";
+        echo "= defined at the begining of the file. Adjust those variable based on usage   =\n";
+        echo "=                                                                             =\n";
+        echo "= If you're less interested in hard coding the variables yourself see the     =\n";
+        echo "= usage section of this help menu                                             =\n";
+        echo "=                                                                             =\n";
+        echo "=                                                                             =\n";
+        echo "===============================================================================\n";
+        echo "=                                                                             =\n";
+        echo "= Usage:                                                                      =\n";
+        echo "=     php AWSome.php -v or --verbose                                          =\n";
+        echo "=     -v gives you more information about each instance                       =\n";
+        echo "=                                                                             =\n";
+        echo "=     php AWSome.php --ip or -i                                               =\n";
+        echo "=      -ip adds a <CR> deliminated list of each IP associated with a          =\n";
+        echo "=      security group. this is useful for feeding IPs to additional tools     =\n";
+        echo "=                                                                             =\n";
+        echo "=     php AWSome.php --help or -h                                             =\n";
+        echo "=      -h shows you the help that you're reading now                          =\n";
+        echo "=                                                                             =\n";
+        echo "=     php AWSome.php -cMyConfig.txt or --config MyConfig.txt                  =\n";
+        echo "=      -c let's you define a config file that has the IAM key on the first    =\n";
+        echo "=      line, the IAM secret on the next line and the path to the              =\n";
+        echo "=      sdk.class.php file on the last (third) line. If you don't want to hard =\n"; 
+        echo "=      code your IAM credentials, use this option                             =\n";
+        echo "=                                                                             =\n";
+        echo "=     php AWSome.php --ami or -a                                              =\n";
+        echo "=      --ami returns each AMI and the IP addresses associated with it in a    =\n";
+        echo "=      <CR> deliminated list. This is useful if you identify a vulnerable AMI =\n";
+        echo "=      while testing                                                          =\n";
+        echo "=                                                                             =\n";
+        echo "===============================================================================\n";
+        echo "=                                                                             =\n";
+        echo "= Contact:                                                                    =\n";
+        echo "=     Mike Arpaia                                                             =\n";
+        echo "=     mike@arpaia.co                                                          =\n";
+        echo "=                                                                             =\n";
+        echo "===============================================================================\n";
         die();
     }
     
+    function readConfig($config){
+        try { $c = fopen("$config", 'r'); }
+        catch (Exception $e){ die("Couln't open supplied config file.\n"); }
+        
+        $key = trim((string)fgets($c), "\n");
+        $secret = trim((string)fgets($c), "\n");
+        $sdkClassPhp = trim((string)fgets($c), "\n");
+        return array($key, $secret, $sdkClassPhp);
+    }
+    
     // argument parsing
-    $shortopts = "vhi";
+    $shortopts = "vhic:a";
     $longopts = array(
         "verbose" , 
         "help" ,
-        "ip"
+        "ip" ,
+        "config:" ,
+        "ami"
     );
     $opts = getopt($shortopts, $longopts);
     $verbose = false;
     $ipDisplay = false;
+    $amiEnum = false;
     foreach ($opts as $key => $value) {
         if ($key == "v" or $key == "verbose") { $verbose = true; }
         if ($key == "i" or $key == "ip") { $ipDisplay = true; }
         if ($key == "h" or $key == "help") { help(); }
+        if ($key == "c" or $key == "config") { 
+            $config = readConfig($value); 
+            $key = $config[0];
+            $secret = $config[1];
+            $sdkClassPhp = $config[2];
+        }
+        if ($key == "a" or $key == "ami") { $amiEnum = true; }
     }
     $options = array(
         $verbose ,
-        $ipDisplay
-    );
-        
-    // use your IAM credentials here
-    $key = "ADD_YOUR_KEY_HERE";
-    $secret = "ADD_YOUR_SECRET_HERE";
-    
-    // include the sdk.class.php file
-    // you can find it in the root 
-    // of the AWS PHP SDK
-    try { 
-		require_once './sdk-1.5.8.2/sdk.class.php'; 
-	}
-	catch (Exception $e) { 
-		echo "AWSome can't find the SDK\n";
-		die();
-	}
-    
+        $ipDisplay , 
+        $amiEnum
+    );    
+
+    // attempting to require_once the SDK file    
+    if (file_exists($sdkClassPhp)) { require_once($sdkClassPhp); } 
+    else { die("AWSome can't find the SDK\n"); }
+
     // set the credentials
     CFCredentials::set(array(
         'credentials' => array(
@@ -122,6 +148,7 @@
     // and store it in $securityGroups
     $sg = $ec2->describe_security_groups();
     $securityGroups = array();
+    if ($sg->status == 401) { die("Something went wrong. Check your credentials.\n"); }
     foreach ($sg->body->securityGroupInfo->item as $attr) {
         // instantiate a temp array
         $array = array();
@@ -159,6 +186,7 @@
     // and store it in $instances
     $ins = $ec2->describe_instances();
     $instances = array();
+    $uniqueAmis = array();
     // enumerate instances
     foreach ($ins->body->reservationSet->item as $attr) {
         //instantiate a temp array to build instance information
@@ -167,6 +195,7 @@
         $arr = $arr[0];
         $instance['instanceId'] = $arr->instanceId;
         $instance['ami'] = $arr->imageId;
+        if (!in_array((string)$arr->imageId[0], $uniqueAmis)) { array_push($uniqueAmis, (string)$arr->imageId[0]); }
         $instance['privateDns'] = $arr->privateDnsName;
         $instance['privateIp'] = $arr->privateIpAddress;
         $instance['dns'] = $arr->dnsName;
@@ -204,75 +233,101 @@
         array_push($keys, $key);
     }
 
-    function stdOutput($securityGroups, $instances, $keys, $options){
+    function stdOutput($securityGroups, $instances, $uniqueAmis, $keys, $options){
         $verbose = $options[0];
         $ipDisplay = $options[1];
+        $amiEnum = $options[2];
         // this function builds the output that is echo'd to stdout
         //
         // if you want the code to output differently, just
         // add a function and call it at the end of the script
-        foreach ($securityGroups as $group) {
-            echo "================================================================================\n";
-            echo "Security Group: " . $group['groupName'] . "\n";
-            echo "--------------------------------------------------------------------------------\n";
-            echo "[+] Group ID:          " . $group['groupId'] . "\n";
-            echo "[+] Group Description: " . $group['groupDescription'] . "\n";
-            echo "--------------------------------------------------------------------------------\n";
-            echo "  Rules that are defined for " . $group['groupName'] . "\n";
-            echo "--------------------------------------------------------------------------------\n";
-            foreach ($group['rules'] as $rule) {
-                echo "    [+] Rule:          " . $rule . "\n";
-            }
-            echo "--------------------------------------------------------------------------------\n";
-            echo "  Instances that use this security group:\n";
-            echo "--------------------------------------------------------------------------------\n";
-            $i = false;
-            $ips = array();
-            foreach ($instances as $instance) {
-                if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
-                    $i = true;
-                    echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
-                    if ($instance['publicIp'] != '') { 
-                        echo "        [-] Instance Status:    Instance is up.\n";
-                        echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
-                        array_push($ips, $instance['publicIp']);
+        if (!$amiEnum) {
+            foreach ($securityGroups as $group) {
+                echo "================================================================================\n";
+                echo "Security Group: " . $group['groupName'] . "\n";
+                echo "--------------------------------------------------------------------------------\n";
+                echo "[+] Group ID:          " . $group['groupId'] . "\n";
+                echo "[+] Group Description: " . $group['groupDescription'] . "\n";
+                echo "--------------------------------------------------------------------------------\n";
+                
+                echo "  Rules that are defined for " . $group['groupName'] . "\n";
+                echo "--------------------------------------------------------------------------------\n";
+                foreach ($group['rules'] as $rule) {
+                    echo "    [+] Rule:          " . $rule . "\n";
+                }
+                echo "--------------------------------------------------------------------------------\n";
+                echo "  Instances that use this security group:\n";
+                echo "--------------------------------------------------------------------------------\n";
+                $i = false;
+                $ips = array();
+                foreach ($instances as $instance) {
+                    if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
+                        $i = true;
+                        echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
+                        if ($instance['publicIp'] != '') { 
+                            echo "        [-] Instance Status:    Instance is up.\n";
+                            echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
+                            array_push($ips, $instance['publicIp']);
+                            if ($verbose){ 
+                                echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                                echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                                echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
+                            }
+                        } else{ echo "        [!] Instance Status:    Instance is stopped.\n"; }
                         if ($verbose){ 
-                            echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
-                            echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
-                            echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
+                            echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
+                            echo "        [-] AMI:                " . $instance['ami'] . "\n";
+                            echo "        [-] SSH Key:            " . $instance['sshKey'];
+                        // If you want to output the key fingerprint along with the name of the SSH key,
+                        // comment out the next line and uncomment the foreach loop
+                        echo "\n";
+                        //foreach ($keys as $key) {
+                        //	if ((string)$key['keyName'] == $instance['sshKey']){ 
+                        //        echo " (" . $key['keyFingerprint'] . ")\n"; 
+                        //    }
+                        //}
                         }
-                    } else{ echo "        [!] Instance Status:    Instance is stopped.\n"; }
-                    if ($verbose){ 
-                        echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
-                        echo "        [-] AMI:                " . $instance['ami'] . "\n";
-                        echo "        [-] SSH Key:            " . $instance['sshKey'];
-                    // If you want to output the key fingerprint along with the name of the SSH key,
-                    // comment out the next line and uncomment the foreach loop
-                    echo "\n";
-                    //foreach ($keys as $key) {
-                    //	if ((string)$key['keyName'] == $instance['sshKey']){ 
-                    //        echo " (" . $key['keyFingerprint'] . ")\n"; 
-                    //    }
-                    //}
                     }
                 }
+                echo "================================================================================\n\n";
+                if (!$i) { echo "    [!] There are no instances in this security group.\n"; }
+                else if ($i and $ipDisplay) { 
+                    echo "--------------------------------------------------------------------------------\n";
+                    echo "  IP addresses of instances in this security group\n";
+                    echo "--------------------------------------------------------------------------------\n";
+                    foreach ($ips as $ip) { echo "$ip\n"; }
+                }
+                echo "================================================================================\n\n";
             }
-            if (!$i) { echo "    [!] There are no instances in this security group.\n"; }
-            if ($i and $ipDisplay) { 
-                echo "--------------------------------------------------------------------------------\n";
-                echo "  IP addresses of instances in this security group\n";
-                echo "--------------------------------------------------------------------------------\n";
-                foreach ($ips as $ip) { echo "$ip\n"; }
-            }
-            echo "================================================================================\n\n";
         }
-    }
+            // if $amiEnum is set:
+            else {
+                foreach ($uniqueAmis as $ami){
+                    echo "================================================================================\n";
+                    echo "  IP addresses of all instances of $ami\n";
+                    echo "--------------------------------------------------------------------------------\n";
+                    $i = false;
+                    foreach ($instances as $instance){
+                        if ((string)$instance['ami'][0] == $ami){
+                            if ((string)$instance['publicIp'][0] !== '') { 
+                                $i = true;
+                                echo $instance['publicIp'] . "\n";
+                            }
+                        }
+                    }
+                    if (!$i) { echo "    [!] There are no live instances of this AMI.\n"; }
+                    echo "================================================================================\n\n";
+            }
+        }
+        }
+
     
     // this takes the arrays that have been generated and passes them 
     // to the function that displays the plain text output to stdout
     //
     // if you want the code to output differently, just
     // add a function and call it here
-    stdOutput($securityGroups, $instances, $keys, $options);
+
+    stdOutput($securityGroups, $instances, $uniqueAmis, $keys, $options);
 
 ?>
