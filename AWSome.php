@@ -266,31 +266,33 @@
                 $i = false;
                 $ips = array();
                 foreach ($instances as $instance) {
-                    if (((string) $instance['securityGroupName'][0]) === ((string) $group['groupName'])) {
-                        $i = true;
-                        echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
-                        if ($instance['publicIp'] != '') { 
-                            echo "        [-] Instance Status:    " . $instance['state'] . "\n";
-                            echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
-                            array_push($ips, $instance['publicIp']);
+                    foreach ($instance['securityGroupName'] as $g) {
+                        if (((string) $g) === ((string) $group['groupName'])) {
+                            $i = true;
+                            echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
+                            if ($instance['publicIp'] != '') { 
+                                echo "        [-] Instance Status:    " . $instance['state'] . "\n";
+                                echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
+                                array_push($ips, $instance['publicIp']);
+                                if ($verbose){ 
+                                    echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
+                                    echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
+                                    echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
+                                }
+                            } else{ echo "        [!] Instance Status:    " . $instance['state'] . "\n"; }
                             if ($verbose){ 
-                                echo "        [-] Public DNS Name:    " . $instance['dns'] . "\n";
-                                echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
-                                echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
+                                echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
+                                echo "        [-] AMI:                " . $instance['ami'] . "\n";
+                                echo "        [-] SSH Key:            " . $instance['sshKey'];
+                            // If you want to output the key fingerprint along with the name of the SSH key,
+                            // comment out the next line and uncomment the foreach loop
+                            echo "\n";
+                            //foreach ($keys as $key) {
+                            //	if ((string)$key['keyName'] == $instance['sshKey']){ 
+                            //        echo " (" . $key['keyFingerprint'] . ")\n"; 
+                            //    }
+                            //}
                             }
-                        } else{ echo "        [!] Instance Status:    " . $instance['state'] . "\n"; }
-                        if ($verbose){ 
-                            echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
-                            echo "        [-] AMI:                " . $instance['ami'] . "\n";
-                            echo "        [-] SSH Key:            " . $instance['sshKey'];
-                        // If you want to output the key fingerprint along with the name of the SSH key,
-                        // comment out the next line and uncomment the foreach loop
-                        echo "\n";
-                        //foreach ($keys as $key) {
-                        //	if ((string)$key['keyName'] == $instance['sshKey']){ 
-                        //        echo " (" . $key['keyFingerprint'] . ")\n"; 
-                        //    }
-                        //}
                         }
                     }
                 }
