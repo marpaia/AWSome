@@ -319,7 +319,7 @@
                     echo "================================================================================\n\n";
             }
         }
-        }
+    }
 
     
     // this takes the arrays that have been generated and passes them 
