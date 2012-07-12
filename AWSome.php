@@ -165,8 +165,7 @@
         // enumerate rules
         foreach ($attr->ipPermissions->item as $attr) {
             // build each rule as a string
-            if ($attr->fromPort == $attr->toPort) { $rule = "$attr->ipProtocol $attr->fromPort from "; }
-            else { $rule = "Forwards data from $attr->ipProtocol port $attr->fromPort to $attr->toPort from "; }
+            $rule = "$attr->ipProtocol port $attr->fromPort - $attr->toPort from ";
             $arr = (array($attr->ipRanges->item->cidrIp));
             $groupName = array($attr->groups->item->groupName);
             if (!is_null($arr[0]) and !is_null($groupName[0])) { $rule .= "$arr[0] and $groupName[0]"; }
@@ -198,6 +197,7 @@
         $arr = $arr[0];
         $instance['instanceId'] = $arr->instanceId;
         $instance['ami'] = $arr->imageId;
+        $instance['state'] = (string)$arr->instanceState->name[0];
         if (!in_array((string)$arr->imageId[0], $uniqueAmis)) { array_push($uniqueAmis, (string)$arr->imageId[0]); }
         $instance['privateDns'] = $arr->privateDnsName;
         $instance['privateIp'] = $arr->privateIpAddress;
@@ -270,7 +270,7 @@
                         $i = true;
                         echo "    [+] Instance ID:            " . $instance['instanceId'] . "\n";
                         if ($instance['publicIp'] != '') { 
-                            echo "        [-] Instance Status:    Instance is up.\n";
+                            echo "        [-] Instance Status:    " . $instance['state'] . "\n";
                             echo "        [-] Public IP Address:  " . $instance['publicIp'] . "\n";
                             array_push($ips, $instance['publicIp']);
                             if ($verbose){ 
@@ -278,7 +278,7 @@
                                 echo "        [-] Private IP Address: " . $instance['privateIp'] . "\n";
                                 echo "        [-] Private DNS Name:   " . $instance['privateDns'] . "\n"; 
                             }
-                        } else{ echo "        [!] Instance Status:    Instance is stopped.\n"; }
+                        } else{ echo "        [!] Instance Status:    " . $instance['state'] . "\n"; }
                         if ($verbose){ 
                             echo "        [-] Architecture:       " . $instance['architecture'] . "\n";
                             echo "        [-] AMI:                " . $instance['ami'] . "\n";
