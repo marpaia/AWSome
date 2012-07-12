@@ -7,7 +7,7 @@
     * mike@arpaia.co
     ********************************************/
     
-    // include the paht to the sdk.class.php file
+    // include the path to the sdk.class.php file
     // you can find it in the root of the AWS PHP SDK
     $sdkClassPhp = "./sdk/sdk.class.php";
     
