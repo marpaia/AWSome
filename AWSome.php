@@ -22,12 +22,38 @@
     *       to additional security tools
     ********************************************/
     function help(){
-        echo "     ___   ____    __    ____   _______.  ______   .___  ___.  _______ \n";
-        echo "    /   \  \   \  /  \  /   /  /       | /  __  \  |   \/   | |   ____|\n";
-        echo "   /  ^  \  \   \/    \/   /  |   (----`|  |  |  | |  \  /  | |  |__   \n";
-        echo "  /  /_\  \  \            /    \   \    |  |  |  | |  |\/|  | |   __|  \n";
-        echo " /  _____  \  \    /\    / .----)   |   |  `--'  | |  |  |  | |  |____ \n";
-        echo "/__/     \__\  \__/  \__/  |_______/     \______/  |__|  |__| |_______|\n";
+		echo "=========================================================\n";
+		echo "=                                                       =\n";
+		echo "=    Oo    o          `O .oOOOo.                        =\n";
+		echo "=   o  O   O           o o     o                        =\n";
+		echo "=  O    o  o           O O.                             =\n";
+		echo "= oOooOoOo O           O  `OOoo.                        =\n";
+		echo "= o      O o     o     o       `O .oOo. `oOOoOO. .oOo.  =\n";
+		echo "= O      o O     O     O        o O   o  O  o  o OooO'  =\n";
+		echo "= o      O `o   O o   O' O.    .O o   O  o  O  O O      =\n";
+		echo "= O.     O  `OoO' `OoO'   `oooO'  `OoO'  O  o  o `OoO'  =\n";
+		echo "=                                                       =\n";
+		echo "=========================================================\n";
+		echo "=                                                       =\n";
+		echo "= Options:                                              =\n";
+		echo "=     php AWSome.php -v or --verbose                    =\n";
+		echo "=     -v gives you more information about each instance =\n";
+		echo "=                                                       =\n";
+		echo "=     php AWSome.php --ip or -i                         =\n";
+		echo "=      -ip returns a <CR> deliminated list of each IP   =\n";
+		echo "=      associated with a security group. this is useful =\n";
+		echo "=      for feeding IPs to additional security tools     =\n";
+		echo "=                                                       =\n";
+		echo "=     php AWSome.php --help or -h                       =\n";
+		echo "=      -h shows you the help that you're reading now    =\n";
+		echo "=                                                       =\n";
+		echo "=========================================================\n";
+		echo "=                                                       =\n";
+		echo "= Contact:                                              =\n";
+		echo "=     Mike Arpaia                                       =\n";
+		echo "=     mike@arpaia.co                                    =\n";
+		echo "=                                                       =\n";
+		echo "=========================================================\n";
         die();
     }
     
