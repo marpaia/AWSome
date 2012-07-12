@@ -12,11 +12,11 @@
     $sdkClassPhp = "./sdk/sdk.class.php";
     
     // set your IAM credentials here
-    $key = "key";
-    $secret = "secret";
-    
-    
-    
+    $k = "key";
+    $s = "secret";
+
+    // the function that prints the help 
+    // and then stops execution
     function help(){
         echo "===============================================================================\n";
         echo "=                                                                             =\n";
@@ -41,7 +41,7 @@
         echo "= If you're going to use AWSome more than a few times, you should hard code   =\n";
         echo "= the path to the SDK file and your AWS IAM credentials into AWSome           =\n";
         echo "=                                                                             =\n";
-        echo "= You can find that the variables \$sdkClassPhp, \$key, and \$secret all get     =\n";
+        echo "= You can find that the variables \$sdkClassPhp, \$k, and \$s all get            =\n";
         echo "= defined at the begining of the file. Adjust those variable based on usage   =\n";
         echo "=                                                                             =\n";
         echo "= If you're less interested in hard coding the variables yourself see the     =\n";
@@ -82,14 +82,17 @@
         die();
     }
     
+    // this file reads the config file that
+    // is passed to the --config or -c option
+    // and returns the relevant information
     function readConfig($config){
         try { $c = fopen("$config", 'r'); }
         catch (Exception $e){ die("Couln't open supplied config file.\n"); }
         
-        $key = trim((string)fgets($c), "\n");
-        $secret = trim((string)fgets($c), "\n");
+        $k = trim((string)fgets($c), "\n");
+        $s = trim((string)fgets($c), "\n");
         $sdkClassPhp = trim((string)fgets($c), "\n");
-        return array($key, $secret, $sdkClassPhp);
+        return array($k, $s, $sdkClassPhp);
     }
     
     // argument parsing
@@ -111,8 +114,8 @@
         if ($key == "h" or $key == "help") { help(); }
         if ($key == "c" or $key == "config") { 
             $config = readConfig($value); 
-            $key = $config[0];
-            $secret = $config[1];
+            $k = $config[0];
+            $s = $config[1];
             $sdkClassPhp = $config[2];
         }
         if ($key == "a" or $key == "ami") { $amiEnum = true; }
@@ -130,8 +133,8 @@
     // set the credentials
     CFCredentials::set(array(
         'credentials' => array(
-            'key' => $key,
-            'secret' => $secret,
+            'key' => $k,
+            'secret' => $s,
             'default_cache_config' => '',
             'certificate_authority' => false
         ),
@@ -239,8 +242,10 @@
         $amiEnum = $options[2];
         // this function builds the output that is echo'd to stdout
         //
-        // if you want the code to output differently, just
-        // add a function and call it at the end of the script
+        // if you want the code to output differently, just write a
+        // different function and call it at the end of the script
+        // instead of calling stdOutput
+        if ($amiEnum and ($verbose or $ipDisplay)) { die("You can't set --ami with either -v or --ip\n"); }
         if (!$amiEnum) {
             foreach ($securityGroups as $group) {
                 echo "================================================================================\n";
@@ -289,7 +294,6 @@
                         }
                     }
                 }
-                echo "================================================================================\n\n";
                 if (!$i) { echo "    [!] There are no instances in this security group.\n"; }
                 else if ($i and $ipDisplay) { 
                     echo "--------------------------------------------------------------------------------\n";
@@ -320,14 +324,12 @@
             }
         }
     }
-
     
     // this takes the arrays that have been generated and passes them 
     // to the function that displays the plain text output to stdout
     //
     // if you want the code to output differently, just
-    // add a function and call it here
-
+    // write a different function and call it here
     stdOutput($securityGroups, $instances, $uniqueAmis, $keys, $options);
-
+    
 ?>
