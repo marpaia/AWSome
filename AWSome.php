@@ -18,67 +18,68 @@
     // the function that prints the help 
     // and then stops execution
     function help(){
-        echo "===============================================================================\n";
-        echo "=                                                                             =\n";
-        echo "=               Oo    o          `O .oOOOo.                                   =\n";
-        echo "=              o  O   O           o o     o                                   =\n";
-        echo "=             O    o  o           O O.                                        =\n";
-        echo "=            oOooOoOo O           O  `OOoo.                                   =\n";
-        echo "=            o      O o     o     o       `O .oOo. `oOOoOO. .oOo.             =\n";
-        echo "=            O      o O     O     O        o O   o  O  o  o OooO'             =\n";
-        echo "=            o      O `o   O o   O' O.    .O o   O  o  O  O O                 =\n";
-        echo "=            O.     O  `OoO' `OoO'   `oooO'  `OoO'  O  o  o `OoO'             =\n";
-        echo "=                                                                             =\n";
-        echo "===============================================================================\n";
-        echo "=                                                                             =\n";
-        echo "= To use AWSome, you need the following:                                      =\n";
-        echo "=     * AWS PHP SDK                                                           =\n";
-        echo "=       You can download the AWS PHP SDK from                                 =\n";
-        echo "=       http://aws.amazon.com/sdkforphp/                                      =\n";
-        echo "=                                                                             =\n";
-        echo "=     * Appropriate IAM Credentials                                           =\n";
-        echo "=                                                                             =\n";
-        echo "= If you're going to use AWSome more than a few times, you should hard code   =\n";
-        echo "= the path to the SDK file and your AWS IAM credentials into AWSome           =\n";
-        echo "=                                                                             =\n";
-        echo "= You can find that the variables \$sdkClassPhp, \$k, and \$s all get            =\n";
-        echo "= defined at the begining of the file. Adjust those variable based on usage   =\n";
-        echo "=                                                                             =\n";
-        echo "= If you're less interested in hard coding the variables yourself see the     =\n";
-        echo "= usage section of this help menu                                             =\n";
-        echo "=                                                                             =\n";
-        echo "=                                                                             =\n";
-        echo "===============================================================================\n";
-        echo "=                                                                             =\n";
-        echo "= Usage:                                                                      =\n";
-        echo "=     php AWSome.php -v or --verbose                                          =\n";
-        echo "=     -v gives you more information about each instance                       =\n";
-        echo "=                                                                             =\n";
-        echo "=     php AWSome.php --ip or -i                                               =\n";
-        echo "=      -ip adds a <CR> deliminated list of each IP associated with a          =\n";
-        echo "=      security group. this is useful for feeding IPs to additional tools     =\n";
-        echo "=                                                                             =\n";
-        echo "=     php AWSome.php --help or -h                                             =\n";
-        echo "=      -h shows you the help that you're reading now                          =\n";
-        echo "=                                                                             =\n";
-        echo "=     php AWSome.php -cMyConfig.txt or --config MyConfig.txt                  =\n";
-        echo "=      -c let's you define a config file that has the IAM key on the first    =\n";
-        echo "=      line, the IAM secret on the next line and the path to the              =\n";
-        echo "=      sdk.class.php file on the last (third) line. If you don't want to hard =\n"; 
-        echo "=      code your IAM credentials, use this option                             =\n";
-        echo "=                                                                             =\n";
-        echo "=     php AWSome.php --ami or -a                                              =\n";
-        echo "=      --ami returns each AMI and the IP addresses associated with it in a    =\n";
-        echo "=      <CR> deliminated list. This is useful if you identify a vulnerable AMI =\n";
-        echo "=      while testing                                                          =\n";
-        echo "=                                                                             =\n";
-        echo "===============================================================================\n";
-        echo "=                                                                             =\n";
-        echo "= Contact:                                                                    =\n";
-        echo "=     Mike Arpaia                                                             =\n";
-        echo "=     mike@arpaia.co                                                          =\n";
-        echo "=                                                                             =\n";
-        echo "===============================================================================\n";
+        echo "
+===============================================================================
+=                                                                             =
+=               Oo    o          `O .oOOOo.                                   =
+=              o  O   O           o o     o                                   =
+=             O    o  o           O O.                                        =
+=            oOooOoOo O           O  `OOoo.                                   =
+=            o      O o     o     o       `O .oOo. `oOOoOO. .oOo.             =
+=            O      o O     O     O        o O   o  O  o  o OooO'             =
+=            o      O `o   O o   O' O.    .O o   O  o  O  O O                 =
+=            O.     O  `OoO' `OoO'   `oooO'  `OoO'  O  o  o `OoO'             =
+=                                                                             =
+===============================================================================
+=                                                                             =
+= To use AWSome, you need the following:                                      =
+=     * AWS PHP SDK                                                           =
+=       You can download the AWS PHP SDK from                                 =
+=       http://aws.amazon.com/sdkforphp/                                      =
+=                                                                             =
+=     * Appropriate IAM Credentials                                           =
+=                                                                             =
+= If you're going to use AWSome more than a few times, you should hard code   =
+= the path to the SDK file and your AWS IAM credentials into AWSome           =
+=                                                                             =
+= You can find that the variables \$sdkClassPhp, \$k, and \$s all get            =
+= defined at the begining of the file. Adjust those variable based on usage   =
+=                                                                             =
+= If you're less interested in hard coding the variables yourself see the     =
+= usage section of this help menu                                             =
+=                                                                             =
+=                                                                             =
+===============================================================================
+=                                                                             =
+= Usage:                                                                      =
+=     php AWSome.php -v or --verbose                                          =
+=     -v gives you more information about each instance                       =
+=                                                                             =
+=     php AWSome.php --ip or -i                                               =
+=      -ip adds a <CR> deliminated list of each IP associated with a          =
+=      security group. this is useful for feeding IPs to additional tools     =
+=                                                                             =
+=     php AWSome.php --help or -h                                             =
+=      -h shows you the help that you're reading now                          =
+=                                                                             =
+=     php AWSome.php -cMyConfig.txt or --config MyConfig.txt                  =
+=      -c let's you define a config file that has the IAM key on the first    =
+=      line, the IAM secret on the next line and the path to the              =
+=      sdk.class.php file on the last (third) line. If you don't want to hard = 
+=      code your IAM credentials, use this option                             =
+=                                                                             =
+=     php AWSome.php --ami or -a                                              =
+=      --ami returns each AMI and the IP addresses associated with it in a    =
+=      <CR> deliminated list. This is useful if you identify a vulnerable AMI =
+=      while testing                                                          =
+=                                                                             =
+===============================================================================
+=                                                                             =
+= Contact:                                                                    =
+=     Mike Arpaia                                                             =
+=     mike@arpaia.co                                                          =
+=                                                                             =
+===============================================================================\n";
         die();
     }
     
