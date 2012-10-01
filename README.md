@@ -20,24 +20,24 @@ If you're less interested in hard coding the variables yourself see the usage
 
 Usage
 ----
-`-v` or `--verbose` gives you more information about each instance              
+`--verbose` or `-v` gives you more information about each instance              
 
-	php AWSome.php -v or --verbose 
+	php AWSome.php -v
 
-`--ip` or `-i` adds a <CR> deliminated list of each IP associated with a security group. This is useful for feeding IPs to additional tools
+`--ip` or `-i` adds a list of each IP associated with a security group. This is useful for feeding IPs to additional tools
 
-	php AWSome.php --ip or -i
+	php AWSome.php --ip
 
-`-h` or `--help` shows you the help text
+`--help` or `-h` shows you the help text
 
-	php AWSome.php --help or -h
+	php AWSome.php --help
 
 `--config` or `-c` let's you define a config file that has the IAM key on the first line, the IAM secret on the next line and the path to the sdk.class.php file on the last (third) line. If you don't want to hard code your IAM credentials, use this option 	
 
-	php AWSome.php -cMyConfig.txt or --config MyConfig.txt                  
+	php AWSome.php -cMyConfig.txt
+    php AWSome.php --config MyConfig.txt                  
 
-
-`--ami` or `-a` returns each AMI and the IP addresses associated with it in a <CR> deliminated list. This is useful if you identify a vulnerable AMI while testing
+`--ami` or `-a` returns each AMI and the IP addresses associated with it. This is useful if you identify a vulnerable AMI while testing
 
 	php AWSome.php --ami
 
