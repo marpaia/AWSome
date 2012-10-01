@@ -12,11 +12,13 @@ Dependencies
 
 Tips
 ----
-If you're going to use AWSome more than a few times, you should hard code the path to the SDK file and your AWS IAM credentials into AWSome
+### Auth
 
-You can find that the variables $sdkClassPhp, $k, and $s all get defined at the begining of the file. Adjust those variable based on your usage
-
-If you're less interested in hard coding the variables yourself see the usage
+* If you're going to use AWSome more than a few times, you should hard code the
+path to the SDK file and your AWS IAM credentials into AWSome
+* You can find that the variables $sdkClassPhp, $k, and $s all get defined at
+the begining of the file. Adjust those variable based on your usage
+* If you're less interested in hard coding the variables yourself see the usage
 
 Usage
 ----
