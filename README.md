@@ -1,6 +1,8 @@
 AWSome
 ======
 
+AWSome is a tool for penetration testing AWS EC2 configurations.
+
 Dependencies
 ------------
 
