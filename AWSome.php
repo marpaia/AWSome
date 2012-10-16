@@ -154,7 +154,9 @@
     // and store it in $securityGroups
     $sg = $ec2->describe_security_groups();
     $securityGroups = array();
-    if ($sg->status == 401) { die("Received a HTTP 401 error. Check your credentials.\n"); }
+    if ($sg->status == 401) { 
+        die("Received a HTTP 401 error. Check your credentials.\n");
+    }
     foreach ($sg->body->securityGroupInfo->item as $attr) {
         // instantiate a temp array
         $array = array();
@@ -171,9 +173,15 @@
             $rule = "$attr->ipProtocol port $attr->fromPort-$attr->toPort from ";
             $arr = (array($attr->ipRanges->item->cidrIp));
             $groupName = array($attr->groups->item->groupName);
-            if (!is_null($arr[0]) and !is_null($groupName[0])) { $rule .= "$arr[0] and $groupName[0]"; }
-            else if (!is_null($arr[0]) and is_null($groupName[0])) { $rule .= "$arr[0]"; }
-            else if (!is_null($groupName[0]) and is_null($arr[0])) { $rule .= "$groupName[0]"; }
+            if (!is_null($arr[0]) and !is_null($groupName[0])) {
+                $rule .= "$arr[0] and $groupName[0]"; 
+            }
+            else if (!is_null($arr[0]) and is_null($groupName[0])) {
+                $rule .= "$arr[0]";
+            }
+            else if (!is_null($groupName[0]) and is_null($arr[0])) {
+                $rule .= "$groupName[0]"; 
+            }
             // push each rule onto the general rules array
             array_push($rules, $rule);
         }
@@ -201,7 +209,9 @@
         $instance['instanceId'] = $arr->instanceId;
         $instance['ami'] = $arr->imageId;
         $instance['state'] = (string)$arr->instanceState->name[0];
-        if (!in_array((string)$arr->imageId[0], $uniqueAmis)) { array_push($uniqueAmis, (string)$arr->imageId[0]); }
+        if (!in_array((string)$arr->imageId[0], $uniqueAmis)) {
+            array_push($uniqueAmis, (string)$arr->imageId[0]);
+        }
         $instance['privateDns'] = $arr->privateDnsName;
         $instance['privateIp'] = $arr->privateIpAddress;
         $instance['dns'] = $arr->dnsName;
